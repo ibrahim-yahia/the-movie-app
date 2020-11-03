@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+body { padding-top: 82px; }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

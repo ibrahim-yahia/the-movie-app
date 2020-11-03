@@ -1,0 +1,42 @@
+<div class="padding-15">
+  <input class="w-100 form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+         [(ngModel)]="searchTerm" (keyup.enter)="searchMovies($event)">
+</div>
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3" *ngIf="moviesPage">
+  <div class="col padding-15" *ngFor="let movie of moviesPage.results">
+    <div class="shadow card h-100" (click)="showMovieDetails()">
+      <div class="row no-gutters h-100">
+        <div class="col-md-5">
+          <img
+            [src]="movie.poster_path? posterImageBaseUrl + '/' + movie.poster_path : '../../../assets/images/no-image.png'"
+            class="card-img" alt="...">
+        </div>
+        <div class="col-md-7">
+          <div class="card-body">
+            <div class="card-title">
+              <span>
+                <span class="star">&#9733;</span>
+                {{movie.vote_average | number:'1.1-1'}}
+              </span>
+              <a href="#" class="btn btn-primary btn-sm float-right">More Info</a>
+            </div>
+            <h5 class="card-title">{{movie.title}}</h5>
+            <p class="card-text ">
+              <small class="text-muted">{{movie.release_date}}</small>
+            </p>
+            <p class="card-text movie-overview">
+              {{movie.overview}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="padding-15" *ngIf="moviesPage">
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="moviesPage.total_results" [pageSize]="20"
+                  [(page)]="moviesPage.page" [maxSize]="5"
+                  [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                  (pageChange)="getMoviesPage($event)"></ngb-pagination>
+</div>
