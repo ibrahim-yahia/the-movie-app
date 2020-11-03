@@ -1,11 +1,11 @@
 <div class="padding-15">
   <input class="w-100 form-control mr-sm-2" placeholder="Search movies ..." type="search"
-         (keyup.enter)="searchMovies($event)">
+         (keyup.enter)="searchMovies($event)" [value]="searchTerm ? searchTerm : ''">
 </div>
 
 <div class="row row-cols-1 row-cols-lg-2" *ngIf="moviesPage">
   <div class="col padding-15" *ngFor="let movie of moviesPage.results">
-    <div class="shadow card h-100" (click)="showMovieDetails()">
+    <div class="shadow card h-100">
       <div class="row no-gutters h-100">
         <div class="col-md-5">
           <img class="card-img" alt="..."
@@ -18,7 +18,7 @@
                 <span class="star">&#9733;</span>
                 {{movie.vote_average | number:'1.1-1'}}
               </span>
-              <a class="btn btn-primary btn-sm float-right" [routerLink]="">More Info</a>
+              <a class="btn btn-primary btn-sm float-right" [routerLink]="['/movie', movie.id]">More Info</a>
             </div>
             <h5 class="card-title">{{movie.title}}</h5>
             <p class="card-text ">

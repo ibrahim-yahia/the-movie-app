@@ -1,1 +1,59 @@
-<p>movie-details works!</p>
+<div class="shadow container" *ngIf="movie && posterImageBaseUrl">
+  <div class="row align-items-center">
+    <div class="col-lg-12 col-xl-4">
+      <img class="img-fluid rounded mx-auto d-block" alt="..."
+           [src]="movie.poster_path? posterImageBaseUrl + '/' + movie.poster_path : '../../../assets/images/no-image.png'">
+    </div>
+    <div class="col-lg-12 col-xl-8">
+      <div class="row">
+        <div class="col-12">
+          <span class="h2">{{movie.title}} ({{movie.release_date |  date:'yyyy'}})</span>
+
+          <a class="btn btn-primary float-right" [routerLink]="['/movies']">Back</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2 p-2">
+              <span class="h5">
+                <span class="star">&#9733;</span>
+                {{movie.vote_average | number:'1.1-1'}}
+              </span>
+        </div>
+        <div class="col-10">
+          <span class="btn btn-dark btn-circle btn-md"
+                  ngbPopover="Add to favorites" triggers="mouseenter:mouseleave" placement="bottom"
+                  (click)="addToFavorites()">
+            <span [ngClass]="isFavorite?'star':''">&#9829;</span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h5>Overview</h5>
+          <p>
+            {{movie.overview}}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h5>Featured Crew</h5>
+        </div>
+      </div>
+      <div class="row row-cols-sm-2 row-cols-md-4">
+        <div class="col" *ngFor="let director of directors">
+          <h6>{{director.name}}</h6>
+          <small>Director</small>
+        </div>
+        <div class="col" *ngFor="let writer of writers">
+          <h6>{{writer.name}}</h6>
+          <small>Writer</small>
+        </div>
+        <div class="col" *ngFor="let screenplay of screenplays">
+          <h6>{{screenplay.name}}</h6>
+          <small>Screenplay</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

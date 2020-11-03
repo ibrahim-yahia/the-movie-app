@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 import {MovieApiService} from '../../services/api/movie-api.service';
 import {Page} from '../../model/page.model';
 import {Movie} from '../../model/movie.model';
 import {ConfigApiService} from '../../services/api/config-api.service';
-import {Observable} from "rxjs";
-import {SearchApiService} from "../../services/api/search-api.service";
+import {SearchApiService} from '../../services/api/search-api.service';
+import {StateService} from '../../services/common/state.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -18,12 +19,14 @@ export class MovieListComponent implements OnInit {
 
   constructor(private config: ConfigApiService,
               private movieApi: MovieApiService,
-              private searchApi: SearchApiService) {
+              private searchApi: SearchApiService,
+              private state: StateService) {
   }
 
   ngOnInit(): void {
+    this.searchTerm = this.state.map.get('searchTerm');
     this.posterImageBaseUrl = this.config.getPosterImageBaseUrl();
-    this.getMoviesPage();
+    this.getMoviesPage(this.state.map.get('pageNumber'));
   }
 
   searchMovies($event: any): void {
@@ -31,12 +34,15 @@ export class MovieListComponent implements OnInit {
       return;
     }
     this.searchTerm = $event.target.value;
+    this.state.map.set('searchTerm', this.searchTerm);
+    this.state.map.set('pageNumber', 1);
     this.getMoviesPage();
   }
 
   getMoviesPage(pageNumber?: number): void {
     this.getApi(pageNumber).subscribe((moviesPage) => {
       this.moviesPage = moviesPage;
+      this.state.map.set('pageNumber', moviesPage.page);
       window.scroll({
         top: 0,
         left: 0,
@@ -50,9 +56,5 @@ export class MovieListComponent implements OnInit {
       return this.searchApi.searchMovies(this.searchTerm, pageNumber);
     }
     return this.movieApi.getUpcomingMovies(pageNumber);
-  }
-
-  showMovieDetails(): void {
-    console.log('hiiiii');
   }
 }
