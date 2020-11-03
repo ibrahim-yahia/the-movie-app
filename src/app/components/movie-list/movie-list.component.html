@@ -3,36 +3,71 @@
          (keyup.enter)="searchMovies($event)" [value]="searchTerm ? searchTerm : ''">
 </div>
 
-<div class="row row-cols-1 row-cols-lg-2" *ngIf="moviesPage">
-  <div class="col padding-15" *ngFor="let movie of moviesPage.results">
-    <div class="shadow card h-100">
-      <div class="row no-gutters h-100">
-        <div class="col-md-5">
-          <img class="card-img" alt="..."
+<!--<div class="row row-cols-1 row-cols-lg-2" *ngIf="moviesPage">-->
+<!--  <div class="col padding-15" *ngFor="let movie of moviesPage.results">-->
+<!--    <div class="shadow card h-100">-->
+<!--      <div class="row no-gutters h-100">-->
+<!--        <div class="col-md-5">-->
+<!--          <img class="card-img" alt="..."-->
+<!--               [src]="movie.poster_path? posterImageBaseUrl + '/' + movie.poster_path : '../../../assets/images/no-image.png'">-->
+<!--        </div>-->
+<!--        <div class="col-md-7">-->
+<!--          <div class="card-body">-->
+<!--            <div class="card-title">-->
+<!--              <span>-->
+<!--                <span class="gold-color">&#9733;</span>-->
+<!--                {{movie.vote_average | number:'1.1-1'}}-->
+<!--              </span>-->
+<!--              <a class="btn btn-primary btn-sm float-right" [routerLink]="['/movie', movie.id]">More Info</a>-->
+<!--            </div>-->
+<!--            <h5 class="card-title">{{movie.title}}</h5>-->
+<!--            <p class="card-text ">-->
+<!--              <small class="text-muted">{{movie.release_date}}</small>-->
+<!--            </p>-->
+<!--            <p class="card-text movie-overview">-->
+<!--              {{movie.overview}}-->
+<!--            </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="container" *ngIf="moviesPage">
+  <div class="row">
+    <div class="col-sm-12 col-lg-6 py-2" *ngFor="let movie of moviesPage.results">
+      <div class="shadow card h-100">
+        <div class="row">
+          <div class="col-sm-12 col-md-5">
+            <img class="card-img" alt="..."
                [src]="movie.poster_path? posterImageBaseUrl + '/' + movie.poster_path : '../../../assets/images/no-image.png'">
-        </div>
-        <div class="col-md-7">
-          <div class="card-body">
-            <div class="card-title">
-              <span>
-                <span class="gold-color">&#9733;</span>
-                {{movie.vote_average | number:'1.1-1'}}
-              </span>
-              <a class="btn btn-primary btn-sm float-right" [routerLink]="['/movie', movie.id]">More Info</a>
+          </div>
+          <div class="col-sm-12 col-md-7">
+            <div class="card-body">
+              <div class="card-title">
+                  <span>
+                    <span class="gold-color">&#9733;</span>
+                    {{movie.vote_average | number:'1.1-1'}}
+                  </span>
+                <a class="btn btn-primary btn-sm float-right" [routerLink]="['/movie', movie.id]">More Info</a>
+              </div>
+              <h5 class="card-title">{{movie.title}}</h5>
+              <p class="card-text ">
+                <small class="text-muted">{{movie.release_date}}</small>
+              </p>
+              <p class="card-text movie-overview">
+                {{movie.overview}}
+              </p>
             </div>
-            <h5 class="card-title">{{movie.title}}</h5>
-            <p class="card-text ">
-              <small class="text-muted">{{movie.release_date}}</small>
-            </p>
-            <p class="card-text movie-overview">
-              {{movie.overview}}
-            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="padding-15" *ngIf="moviesPage && moviesPage.total_pages > 1">
   <ngb-pagination class="d-flex justify-content-center" [collectionSize]="moviesPage.total_results" [pageSize]="20"

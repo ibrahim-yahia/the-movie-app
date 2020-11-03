@@ -1,3 +1,6 @@
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
 
 .padding-15 {
   padding: 20px 15px 20px 15px;
@@ -8,8 +11,19 @@
 }
 
 .movie-overview {
+}
+
+.movie-overview {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+  @include media-breakpoint-down(xl) {
+    -webkit-line-clamp: 3;
+  }
+  @include media-breakpoint-up(xl) {
+    -webkit-line-clamp: 5;
+  }
+  @include media-breakpoint-between(sm, md) {
+    -webkit-line-clamp: 5;
+  }
 }
