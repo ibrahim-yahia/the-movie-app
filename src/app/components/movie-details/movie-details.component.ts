@@ -4,6 +4,7 @@ import {MovieApiService} from '../../services/api/movie-api.service';
 import {Movie} from '../../model/movie.model';
 import {Crew} from '../../model/crew.model';
 import {ConfigApiService} from '../../services/api/config-api.service';
+import {FavoriteMoviesService} from '../../services/favorite-movies.service';
 
 enum CrewJob {
   DIRECTOR = 'Director',
@@ -28,18 +29,27 @@ export class MovieDetailsComponent implements OnInit {
 
   constructor(private config: ConfigApiService,
               private movieApi: MovieApiService,
+              private favorites: FavoriteMoviesService,
               private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.posterImageBaseUrl = this.config.getPosterImageBaseUrl();
     const movieId = +this.route.snapshot.paramMap.get('id');
-    this.movieApi.getMovieDetails(movieId).subscribe((movie) => this.movie = movie);
+    this.movieApi.getMovieDetails(movieId).subscribe((movie) => {
+      this.movie = movie;
+      this.isFavorite = this.favorites.contains(this.movie);
+    });
     this.getFeaturedCrew(movieId);
   }
 
-  addToFavorites(): void {
+  toggleFavorite(): void {
     this.isFavorite = !this.isFavorite;
+    if (this.isFavorite) {
+      this.favorites.addMovie(this.movie);
+    } else {
+      this.favorites.deleteMovie(this.movie);
+    }
   }
 
   private getFeaturedCrew(movieId: number): void {

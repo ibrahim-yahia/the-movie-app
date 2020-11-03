@@ -4,8 +4,16 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class StateService {
-  map = new Map();
+  private map = new Map();
 
   constructor() {
+  }
+
+  get(key): any {
+    return this.map.get(key);
+  }
+
+  set(key, value): any {
+    this.map.set(key, value);
   }
 }

@@ -7,6 +7,11 @@ import {ConfigApiService} from '../../services/api/config-api.service';
 import {SearchApiService} from '../../services/api/search-api.service';
 import {StateService} from '../../services/common/state.service';
 
+enum StateKey {
+  SEARCH_TERM = 'searchTerm',
+  PAGE_NUMBER = 'pageNumber',
+}
+
 @Component({
   selector: 'app-movie-list',
   templateUrl: './movie-list.component.html',
@@ -24,9 +29,9 @@ export class MovieListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchTerm = this.state.map.get('searchTerm');
+    this.searchTerm = this.state.get(StateKey.SEARCH_TERM);
     this.posterImageBaseUrl = this.config.getPosterImageBaseUrl();
-    this.getMoviesPage(this.state.map.get('pageNumber'));
+    this.getMoviesPage(this.state.get(StateKey.PAGE_NUMBER));
   }
 
   searchMovies($event: any): void {
@@ -34,15 +39,15 @@ export class MovieListComponent implements OnInit {
       return;
     }
     this.searchTerm = $event.target.value;
-    this.state.map.set('searchTerm', this.searchTerm);
-    this.state.map.set('pageNumber', 1);
+    this.state.set(StateKey.SEARCH_TERM, this.searchTerm);
+    this.state.set(StateKey.PAGE_NUMBER, 1);
     this.getMoviesPage();
   }
 
   getMoviesPage(pageNumber?: number): void {
     this.getApi(pageNumber).subscribe((moviesPage) => {
       this.moviesPage = moviesPage;
-      this.state.map.set('pageNumber', moviesPage.page);
+      this.state.set(StateKey.PAGE_NUMBER, moviesPage.page);
       window.scroll({
         top: 0,
         left: 0,
