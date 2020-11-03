@@ -40,18 +40,38 @@
           <h5>Featured Crew</h5>
         </div>
       </div>
-      <div class="row row-cols-sm-2 row-cols-md-4">
-        <div class="col" *ngFor="let director of directors">
-          <h6>{{director.name}}</h6>
-          <small>Director</small>
+<!--      <div class="row row-cols-sm-2 row-cols-md-4">-->
+<!--        <div class="col" *ngFor="let director of directors">-->
+<!--          <h6>{{director.name}}</h6>-->
+<!--          <small>Director</small>-->
+<!--        </div>-->
+<!--        <div class="col" *ngFor="let writer of writers">-->
+<!--          <h6>{{writer.name}}</h6>-->
+<!--          <small>Writer</small>-->
+<!--        </div>-->
+<!--        <div class="col" *ngFor="let screenplay of screenplays">-->
+<!--          <h6>{{screenplay.name}}</h6>-->
+<!--          <small>Screenplay</small>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="row">
+        <div class="col-sm-6 col-md-4 py-2" *ngFor="let director of directors">
+          <div class="h-100">
+            <h6>{{director.name}}</h6>
+            <small>Director</small>
+          </div>
         </div>
-        <div class="col" *ngFor="let writer of writers">
-          <h6>{{writer.name}}</h6>
-          <small>Writer</small>
+        <div class="col-sm-6 col-md-4 py-2" *ngFor="let writer of writers">
+          <div class="h-100">
+            <h6>{{writer.name}}</h6>
+            <small>Writer</small>
+          </div>
         </div>
-        <div class="col" *ngFor="let screenplay of screenplays">
-          <h6>{{screenplay.name}}</h6>
-          <small>Screenplay</small>
+        <div class="col-sm-6 col-md-4 py-2" *ngFor="let screenplay of screenplays">
+          <div class="h-100">
+            <h6>{{screenplay.name}}</h6>
+            <small>Screenplay</small>
+          </div>
         </div>
       </div>
     </div>
